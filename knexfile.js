@@ -4,7 +4,10 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/kouleur_data'
+    connection: 'postgres://localhost/kouleur_data',
+    migrations: {
+      directory: './db/migrations'
+    }
   },
 
   production: {
