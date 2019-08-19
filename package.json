@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "db": "^1.1.1",
     "express": "^4.17.1",
-    "knex": "^0.19.2"
+    "knex": "^0.19.2",
+    "pg": "^7.12.1"
   }
 }

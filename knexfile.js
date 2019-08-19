@@ -7,6 +7,9 @@ module.exports = {
     connection: 'postgres://localhost/kouleur_data',
     migrations: {
       directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds'
     }
   },
 
