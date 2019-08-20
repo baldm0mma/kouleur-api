@@ -17,7 +17,7 @@ exports.up = function(knex) {
       table.string('color_5');
       table.timestamps(true, true);
     })
-  ]);
+  ]); 
 };
 
 exports.down = function(knex) {

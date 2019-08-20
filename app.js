@@ -64,11 +64,11 @@ app.get('/api/v1/palettes/search', (req, res) => {
         .orWhere('color_5', query);
     })
     .then(palettes => {
+      console.log(palettes.length)
       palettes.length
         ? res.status(200).json(palettes)
-        : res
-            .status(404)
-            .json({ error: `Palettes with project id:${id} do not exsist` });
+        : res.status(404)
+            .json({ error: `Those palettes do not exsist` });
     })
     .catch(error =>
       res.status(500).json({ error: 'Cannot retrieve palettes at this time' })
