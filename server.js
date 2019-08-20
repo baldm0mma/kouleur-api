@@ -34,8 +34,31 @@ app.get('/api/v1/projects/:id', (req, res) => {
 app.get('/api/v1/projects/:id/palettes', (req, res) => {
   const { id } = req.params;
   database('palettes')
-    .where({ 'project_id': id })
+    .where({ project_id: id })
     .select()
+    .then(palettes => {
+      palettes.length
+        ? res.status(200).json(palettes)
+        : res
+            .status(404)
+            .json({ error: `Palettes with project id:${id} do not exsist` });
+    })
+    .catch(error =>
+      res.status(500).json({ error: 'Cannot retrieve palettes at this time' })
+    );
+});
+
+app.get('/api/v1/projects/palettes/search', (req, res) => {
+  const query = req.query.hex;
+  console.log(query)
+  database('palettes')
+    .where(function() {
+      this.where('color_1', query)
+        .orWhere('color_2', query)
+        .orWhere('color_3', query)
+        .orWhere('color_4', query)
+        .orWhere('color_5', query);
+    })
     .then(palettes => {
       palettes.length
         ? res.status(200).json(palettes)
