@@ -108,10 +108,21 @@ describe('API', () => {
       expect(response.status).toEqual(200)
     })
 
-    it.only('should return a status of 404 if palettes are not found in the search query', async () => {
+    it('should return a status of 404 if palettes are not found in the search query', async () => {
       const mockColor = 'zzzzzzzzzzzzzzzzzzzzzzzzzz'
       const response = await request(app).get(`/api/v1/palettes/search?hex=${mockColor}`)
       expect(response.status).toEqual(404)
+    })
+
+  })
+
+  describe('POST /projects', () => {
+
+    it.only('should be able to create a new project and return the id of the project', async ()=> {
+      const body = {project: {project_name: 'name'}}
+      const response = await request(app).post('/api/v1/projects').send(body)
+      const newProject = await database('projects').where('id', response.body).select()
+      expect(newProject[0].project_name).toEqual(body.project.project_name)
     })
 
   })

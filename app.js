@@ -75,4 +75,24 @@ app.get('/api/v1/palettes/search', (req, res) => {
     );
 });
 
+app.post('/api/v1/projects', async (request, response) => {
+  const newProject = request.body.project;
+  try {
+    if (newProject) {
+      const id = await database('projects').insert(newProject, 'id');
+      response.status(200).json(id[0]);
+    } else {
+      response.status(400).json({
+        error:
+          'Expected an object with a key of project in the body of the post request'
+      });
+    }
+  } catch (error) {
+    response.status(500).json({ error });
+  }
+});
+
+
+
+
 module.exports = app;
