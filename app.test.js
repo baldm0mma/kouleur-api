@@ -9,7 +9,7 @@ describe('API', () => {
     await database.seed.run();
   });
   describe('GET /projects', () => {
-    it('should respond with all of the projects', async () => {
+    it.skip('should respond with all of the projects', async () => {
       const expectedProjects = await database('projects').select();
       const response = await request(app).get('/api/v1/projects');
       const projects = response.body;
@@ -23,7 +23,8 @@ describe('API', () => {
     });
   });
   describe('GET /projects/:id', () => {
-    it('should respond with the specific project', async () => {
+
+    it.skip('should respond with the specific project', async () => {
       const mockId = await database('projects')
         .first('id')
         .then(obj => obj.id);
@@ -34,5 +35,97 @@ describe('API', () => {
 
       expect(response.body).toEqual(expectedProject);
     });
+
+    it('should respond with a status code of 200', async () => {
+      const mockId = await database('projects')
+        .first('id')
+        .then(obj => obj.id);
+      const response = await request(app).get(`/api/v1/projects/${mockId}`);
+      expect(response.status).toBe(200)
+    })
+
+    it('should respond with a status code of 404', async () => {
+      const mockId = -1
+      const response = await request(app).get(`/api/v1/projects/${mockId}`);
+      expect(response.status).toBe(404)
+    })
   });
+  describe('GET / projects/:id/palettes', () => {
+
+    it.skip('should respond with all the palettes for the specified project', async () => {
+      const mockId = await database('projects')
+        .first('id')
+        .then(obj => obj.id);
+      const expectedProject = await database('palettes')
+        .select()
+        .where('project_id', mockId)
+      const response = await request(app).get(`/api/v1/projects/${mockId}/palettes`)
+      expect(response.body).toEqual(expectedProject)
+    })
+
+    it('should return a status of 200 if the project is found', async () => {
+      const mockId = await database('projects')
+        .first('id')
+        .then(obj => obj.id);
+      const response = await request(app).get(`/api/v1/projects/${mockId}/palettes`)
+      expect(response.status).toBe(200)
+    })
+
+    it('should return a status of 404 if the project is not found', async () => {
+      const mockId = -1 
+      const response = await request(app).get(`/api/v1/projects/${mockId}/palettes`)
+      expect(response.status).toBe(404)
+    })
+
+  })
+
+  describe('GET palettes/search', () => {
+
+    it.skip('should return the projects whose match the query', async () => {
+      const mockColor = await database('palettes')
+        .first('color_1')
+        .then(palette => palette.color_1)
+
+      const expectedProject = await database('palettes')
+        .select()
+        .where(function() {
+          this.where('color_1', mockColor)
+          .orWhere('color_2', mockColor)
+          .orWhere('color_3', mockColor)
+          .orWhere('color_4', mockColor)
+          .orWhere('color_5', mockColor);
+    })
+      const response = await request(app).get(`/api/v1/palettes/search?hex=${mockColor}`)
+      expect(response.body).toEqual(expectedProject)
+    })
+
+    it('should return a status of 200 if palettes are found the search query', async () => {
+      const mockColor = await database('palettes')
+        .first('color_1')
+        .then(palette => palette.color_1)
+      const response = await request(app).get(`/api/v1/palettes/search?hex=${mockColor}`)
+      console.log(response.body)
+      expect(response.status).toEqual(200)
+    })
+
+    it('should return a status of 404 if palettes are not found in the search query', async () => {
+      const mockColor = 'zzzzzzzzzzzzzzzzzzzzzzzzzz'
+      const response = await request(app).get(`/api/v1/palettes/search?hex=${mockColor}`)
+      expect(response.status).toEqual(404)
+    })
+
+  })
+
+  describe('POST /projects', () => {
+
+    it.only('should be able to create a new project and return the id of the project', async ()=> {
+      const body = {project: {project_name: 'name'}}
+      const response = await request(app).post('/api/v1/projects').send(body)
+      const newProject = await database('projects').where('id', response.body).select()
+      expect(newProject[0].project_name).toEqual(body.project.project_name)
+    })
+
+  })
+
+
 });

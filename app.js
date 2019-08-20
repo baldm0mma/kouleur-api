@@ -64,15 +64,35 @@ app.get('/api/v1/palettes/search', (req, res) => {
         .orWhere('color_5', query);
     })
     .then(palettes => {
+      console.log(palettes.length)
       palettes.length
         ? res.status(200).json(palettes)
-        : res
-            .status(404)
-            .json({ error: `Palettes with project id:${id} do not exsist` });
+        : res.status(404)
+            .json({ error: `Those palettes do not exsist` });
     })
     .catch(error =>
       res.status(500).json({ error: 'Cannot retrieve palettes at this time' })
     );
 });
+
+app.post('/api/v1/projects', async (request, response) => {
+  const newProject = request.body.project;
+  try {
+    if (newProject) {
+      const id = await database('projects').insert(newProject, 'id');
+      response.status(200).json(id[0]);
+    } else {
+      response.status(400).json({
+        error:
+          'Expected an object with a key of project in the body of the post request'
+      });
+    }
+  } catch (error) {
+    response.status(500).json({ error });
+  }
+});
+
+
+
 
 module.exports = app;
