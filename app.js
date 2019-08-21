@@ -125,6 +125,21 @@ app.delete('/api/v1/palettes/:id', async (req, res) => {
   }
 })
 
+app.delete('/api/v1/projects/:id', async (req, res) => {
+  const { id } = req.params
+  try{
+    await database('palettes').where('project_id', id).del()
+    const affectedProjects = await database('projects').where('id', id).del()
+    if(affectedProjects) {
+      res.status(201).json({id: parseInt(id)})
+    } else {
+      res.status(404).json({error: 'Provide valid id'})
+    }
+  }catch(error){
+    res.status(500).json({ error });
+  }
+})
+
 
 
 

@@ -208,6 +208,7 @@ describe('API', () => {
       const response = await request(app).delete(`/api/v1/palettes/${mockId}`)
       const deletedItem = await database('palettes').where('id', mockId).select()
       expect(response.body.id).toEqual(mockId)
+      expect(deletedItem.length).toEqual(0)
     })
 
     it('should return a status of 201 if the palette was successfully deleted', async () => {
@@ -221,6 +222,36 @@ describe('API', () => {
     it('should return a status of 404', async () => {
       const mockId = -1 
       const response = await request(app).delete(`/api/v1/palettes/${mockId}`)
+      expect(response.status).toBe(404)
+    })
+  })
+
+  describe('DELETE /projects', () => {
+
+    it('should delete a project  and return that project id', async () => {
+      const mockId = await database('projects')
+      .first('id')
+      .then(obj => obj.id);
+
+      const response = await request(app).delete(`/api/v1/projects/${mockId}`)
+      const deletedPalettes = await database('palettes').where('project_id', mockId).select()
+      const deletedProjects = await database('projects').where('id', mockId).select()
+      expect(deletedProjects.length).toEqual(0)
+      expect(deletedPalettes.length).toEqual(0)
+      expect(response.body.id).toEqual(mockId)
+    })
+
+    it('should return a status of 201 if the project and its palettes was successfully deleted', async () => {
+      const mockId = await database('projects')
+      .first('id')
+      .then(obj => obj.id);
+      const response = await request(app).delete(`/api/v1/projects/${mockId}`)
+      expect(response.status).toBe(201)
+    })
+
+    it('should return a status of 404 if the delete was unsuccessful', async () => {
+      const mockId = -1 
+      const response = await request(app).delete(`/api/v1/projects/${mockId}`)
       expect(response.status).toBe(404)
     })
   })
