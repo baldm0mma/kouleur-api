@@ -104,11 +104,24 @@ app.post('/api/v1/palettes', async (request, response) => {
       }
     }
     const id = await database('palettes').insert(newPalette, 'id');
-    await console.log(id[0])
     response.status(201).json({id: id[0]})
   }
   catch (error) {
     response.status(500).json({ error });
+  }
+})
+
+app.delete('/api/v1/palettes/:id', async (req, res) => {
+  const { id } = req.params
+  try{
+    const affectedLines = await database('palettes').where('id', id).del()
+    if(affectedLines) {
+      res.status(201).json({id: parseInt(id)})
+    } else {
+      res.status(404).json({error: 'Provide valid id'})
+    }
+  }catch(error){
+    res.status(500).json({ error });
   }
 })
 

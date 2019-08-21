@@ -198,7 +198,31 @@ describe('API', () => {
 
   })
 
-  
+  describe('DELETE /palettes', () => {
 
+    it('should delete a palette and return that palette\'s id', async () => {
+      const mockId = await database('palettes')
+      .first('id')
+      .then(obj => obj.id);
+
+      const response = await request(app).delete(`/api/v1/palettes/${mockId}`)
+      const deletedItem = await database('palettes').where('id', mockId).select()
+      expect(response.body.id).toEqual(mockId)
+    })
+
+    it('should return a status of 201 if the palette was successfully deleted', async () => {
+      const mockId = await database('palettes')
+      .first('id')
+      .then(obj => obj.id);
+      const response = await request(app).delete(`/api/v1/palettes/${mockId}`)
+      expect(response.status).toBe(201)
+    })
+
+    it('should return a status of 404', async () => {
+      const mockId = -1 
+      const response = await request(app).delete(`/api/v1/palettes/${mockId}`)
+      expect(response.status).toBe(404)
+    })
+  })
 
 });
