@@ -140,6 +140,30 @@ app.delete('/api/v1/projects/:id', async (req, res) => {
   }
 })
 
+app.patch('/api/v1/palettes/:id', async (req, res) => {
+  const { id } = req.params
+  const palette = req.body
+  try {
+    for (let requiredParameter of ['palette_name', 'color_1',
+    'color_2', 'color_3', 'color_4', 'color_5']) {
+      console.log(requiredParameter)
+      if (!palette[requiredParameter]) {
+        return res
+          .status(422)
+          .send({ error: `Expected format: {palette_name: <String>, colors: <String> }. 
+          You're missing a "${requiredParameter}" property.` });
+      } else {
+        await database('palettes').where('id', id).update({...palette})
+        return res.status(202).json({id: id})
+      }
+    }
+  } catch(error){
+    res.status(500).json({ error });
+  }
+
+})
+
+
 
 
 

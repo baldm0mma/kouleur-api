@@ -256,4 +256,43 @@ describe('API', () => {
     })
   })
 
+  describe('PATCH /palettes/:id', () => {
+    it('should update the colors on the chosen palette', async () => {
+      const mockId = await database('palettes')
+        .first('id')
+        .then(obj => obj.id);
+      const palette = {
+        palette_name: 'autumn foliage',
+        color_1: '111111', 
+        color_2: '222222',
+        color_3: '333333',
+        color_4: '444444',
+        color_5: '555555'
+      }
+
+      const response = await request(app).patch(`/api/v1/palettes/${mockId}`).send(palette)
+      const expectedUpdate = await database('palettes').where('id', mockId)
+
+      expect(expectedUpdate[0].color_1).toEqual('111111')
+      expect(expectedUpdate[0].color_2).toEqual('222222')
+      expect(parseInt(response.body.id)).toEqual(mockId)
+      expect(response.status).toBe(202)
+    })
+    it('should respond with a status code of 422 if the required parameters are not given', async () => {
+      const mockId = await database('palettes')
+      .first('id')
+      .then(obj => obj.id);
+      const palette = {
+        palette_name: 'autumn foliage',
+        color_4: '444444',
+        color_6: '555555'
+      }
+      const response = await request(app).patch(`/api/v1/palettes/${mockId}`).send(palette)
+      const expectedPalette = await database('palettes').where('id', mockId)
+      expect(response.status).toBe(422)
+      expect(expectedPalette.color_4).not.toEqual(body.color_5)
+    })
+
+  })
+
 });
