@@ -141,8 +141,58 @@ describe('API', () => {
     })
 
     it('should send back a status of 422 when the project is not added correctly', async () => {
-      const body = {dogpoop: {projct_name: 'name'}}
+      const body = {project: {prot_name: 'name'}}
       const response = await request(app).post('/api/v1/projects').send(body)
+      expect(response.status).toBe(422)
+    })
+
+  })
+
+  describe('POST /palettes', () => {
+
+    it('should be able to create a new palette and return the id of the palette', async () => {
+      const mockId = await database('projects')
+      .first('id')
+      .then(obj => obj.id);
+      const newPalette = {palette: {
+        project_id: mockId,
+        palette_name: 'Autumn Eclipse',
+        color_1: '333322',
+        color_2: '777777',
+        color_3: '884422',
+        color_4: 'eeeeff',
+        color_5: 'aa9999'
+      }}
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      const expectedPalette = await database('palettes').where('id', response.body.id).select()
+      expect(expectedPalette[0].id).toEqual(response.body.id)
+      expect(expectedPalette[0].palette_name).toEqual(newPalette.palette.palette_name)
+    })
+
+    it('should resond with a status of 201 if the palette is posted correctly', async () => {
+      const mockId = await database('projects')
+      .first('id')
+      .then(obj => obj.id);
+      const newPalette = {palette: {
+        project_id: mockId,
+        palette_name: 'Autumn Eclipse',
+        color_1: '333322',
+        color_2: '777777',
+        color_3: '884422',
+        color_4: 'eeeeff',
+        color_5: 'aa9999'
+      }}
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      expect(response.status).toBe(201)
+    })
+    it('should respond with a status of 422 if the palette did not include all needed values', async () => {
+      const mockId = await database('projects')
+      .first('id')
+      .then(obj => obj.id);
+      const newPalette = {palette: {
+        project_id: mockId,
+      }}
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
       expect(response.status).toBe(422)
     })
 
