@@ -64,7 +64,6 @@ app.get('/api/v1/palettes/search', (req, res) => {
         .orWhere('color_5', query);
     })
     .then(palettes => {
-      console.log(palettes.length)
       palettes.length
         ? res.status(200).json(palettes)
         : res.status(404)
