@@ -134,7 +134,21 @@ describe('API', () => {
       expect(newProject[0].project_name).toEqual(body.project.project_name)
     })
 
+    it('should send back a status of 200 when the project is add correctly', async () => {
+      const body = {project: {project_name: 'name'}}
+      const response = await request(app).post('/api/v1/projects').send(body)
+      expect(response.status).toBe(201)
+    })
+
+    it('should send back a status of 422 when the project is not added correctly', async () => {
+      const body = {dogpoop: {projct_name: 'name'}}
+      const response = await request(app).post('/api/v1/projects').send(body)
+      expect(response.status).toBe(422)
+    })
+
   })
+
+  
 
 
 });

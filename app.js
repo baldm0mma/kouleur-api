@@ -79,9 +79,9 @@ app.post('/api/v1/projects', async (request, response) => {
   try {
     if (newProject) {
       const id = await database('projects').insert(newProject, 'id');
-      response.status(200).json(id[0]);
+      response.status(201).json(id[0]);
     } else {
-      response.status(400).json({
+      response.status(422).json({
         error:
           'Expected an object with a key of project in the body of the post request'
       });
