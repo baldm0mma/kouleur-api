@@ -8,6 +8,7 @@ describe('API', () => {
   beforeEach(async () => {
     await database.seed.run();
   });
+
   describe('GET /projects', () => {
     it('should respond with all of the projects', async () => {
       const expectedProjects = await database('projects').select();
@@ -95,7 +96,6 @@ describe('API', () => {
       const mockColor = await database('palettes')
         .first('color_1')
         .then(palette => palette.color_1);
-
       const expectedPalette = await database('palettes')
         .select()
         .where(function() {
@@ -120,6 +120,7 @@ describe('API', () => {
       const response = await request(app).get(
         `/api/v1/palettes/search?hex=${mockColor}`
       );
+
       expect(response.status).toEqual(200);
     });
 
@@ -209,6 +210,7 @@ describe('API', () => {
         .send(newPalette);
       expect(response.status).toBe(201);
     });
+
     it('should respond with a status of 422 if the palette did not include all needed values', async () => {
       const mockId = await database('projects')
         .first('id')
@@ -230,7 +232,6 @@ describe('API', () => {
       const mockId = await database('palettes')
         .first('id')
         .then(obj => obj.id);
-
       const response = await request(app).delete(`/api/v1/palettes/${mockId}`);
       const deletedItem = await database('palettes')
         .where('id', mockId)
@@ -259,7 +260,6 @@ describe('API', () => {
       const mockId = await database('projects')
         .first('id')
         .then(obj => obj.id);
-
       const response = await request(app).delete(`/api/v1/projects/${mockId}`);
       const deletedPalettes = await database('palettes')
         .where('project_id', mockId)
@@ -300,7 +300,6 @@ describe('API', () => {
         color_4: '444444',
         color_5: '555555'
       };
-
       const response = await request(app)
         .patch(`/api/v1/palettes/${mockId}`)
         .send(palette);
@@ -311,6 +310,7 @@ describe('API', () => {
       expect(parseInt(response.body.id)).toEqual(mockId);
       expect(response.status).toBe(202);
     });
+
     it('should respond with a status code of 422 if the required parameters are not given', async () => {
       const mockId = await database('palettes')
         .first('id')
@@ -326,6 +326,36 @@ describe('API', () => {
       const expectedPalette = await database('palettes').where('id', mockId);
       expect(response.status).toBe(422);
       expect(expectedPalette.color_4).not.toEqual(palette.color_4);
+    });
+  });
+
+  describe('PATCH /projects', () => {
+    it("should update a project's name and respond with the project id and status code of 202", async () => {
+      const mockId = await database('projects')
+        .first('id')
+        .then(obj => obj.id);
+      const body = {
+        project_name: 'Edited Project Title'
+      };
+      const response = await request(app)
+        .patch(`/api/v1/projects/${mockId}`)
+        .send(body);
+      const expectedProject = await database('projects').where('id', mockId);
+      expect(expectedProject[0].project_name).toEqual(body.project_name);
+      expect(response.status).toBe(202);
+    });
+
+    it('should respond with a 422 if the required parameters were not met', async () => {
+      const mockId = await database('projects')
+        .first('id')
+        .then(obj => obj.id);
+      const body = {
+        project_name: ''
+      };
+      const response = await request(app)
+        .patch(`/api/v1/projects/${mockId}`)
+        .send(body);
+      expect(response.status).toBe(422);
     });
   });
 });

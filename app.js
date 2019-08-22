@@ -179,6 +179,22 @@ app.patch('/api/v1/palettes/:id', async (req, res) => {
   }
 });
 
-// app.patch('/api/v1/projects/:id', async (req, res) => {})
+app.patch('/api/v1/projects/:id', async (req, res) => {
+  const { id } = req.params;
+  const { project_name } = req.body;
+  try {
+    if (!project_name) {
+      return res
+        .status(422)
+        .json({ error: 'Please provide a valid key-value pair for renaming' });
+    }
+    await database('projects')
+      .where('id', id)
+      .update({ project_name });
+    return res.status(202).json({ id: id });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
 
 module.exports = app;
