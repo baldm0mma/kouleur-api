@@ -55,6 +55,10 @@ app.get('/api/v1/projects/:id/palettes', (req, res) => {
 
 app.get('/api/v1/palettes/search', (req, res) => {
   const query = req.query.hex;
+  if (!query) {
+    return database('palettes').select()
+      .then(palettes => res.status(200).json(palettes));
+  }
   database('palettes')
     .where(function() {
       this.where('color_1', query)
