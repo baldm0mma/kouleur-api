@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --forceExit",
+    "test": "jest --forceExit",
     "start": "nodemon server.js"
   },
   "keywords": [],
