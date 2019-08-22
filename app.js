@@ -64,7 +64,6 @@ app.get('/api/v1/palettes/search', (req, res) => {
         .orWhere('color_5', query);
     })
     .then(palettes => {
-      console.log(palettes.length)
       palettes.length
         ? res.status(200).json(palettes)
         : res.status(404)
@@ -78,11 +77,11 @@ app.get('/api/v1/palettes/search', (req, res) => {
 app.post('/api/v1/projects', async (request, response) => {
   const newProject = request.body.project;
   try {
-    if (newProject) {
+    if (newProject.project_name) {
       const id = await database('projects').insert(newProject, 'id');
-      response.status(200).json(id[0]);
+      response.status(201).json(id[0]);
     } else {
-      response.status(400).json({
+      response.status(422).json({
         error:
           'Expected an object with a key of project in the body of the post request'
       });
@@ -91,6 +90,79 @@ app.post('/api/v1/projects', async (request, response) => {
     response.status(500).json({ error });
   }
 });
+
+app.post('/api/v1/palettes', async (request, response) => {
+  const newPalette = request.body.palette
+  try {
+    for (let requiredParameter of ['project_id', 'palette_name', 'color_1',
+    'color_2', 'color_3', 'color_4', 'color_5']) {
+      if (!newPalette[requiredParameter]) {
+        return response
+          .status(422)
+          .send({ error: `Expected format: { project_id: <Integer>, palette_name: <String>, colors: <String> }. 
+          You're missing a "${requiredParameter}" property.` });
+      }
+    }
+    const id = await database('palettes').insert(newPalette, 'id');
+    response.status(201).json({id: id[0]})
+  }
+  catch (error) {
+    response.status(500).json({ error });
+  }
+})
+
+app.delete('/api/v1/palettes/:id', async (req, res) => {
+  const { id } = req.params
+  try{
+    const affectedLines = await database('palettes').where('id', id).del()
+    if(affectedLines) {
+      res.status(201).json({id: parseInt(id)})
+    } else {
+      res.status(404).json({error: 'Provide valid id'})
+    }
+  }catch(error){
+    res.status(500).json({ error });
+  }
+})
+
+app.delete('/api/v1/projects/:id', async (req, res) => {
+  const { id } = req.params
+  try{
+    await database('palettes').where('project_id', id).del()
+    const affectedProjects = await database('projects').where('id', id).del()
+    if(affectedProjects) {
+      res.status(201).json({id: parseInt(id)})
+    } else {
+      res.status(404).json({error: 'Provide valid id'})
+    }
+  }catch(error){
+    res.status(500).json({ error });
+  }
+})
+
+app.patch('/api/v1/palettes/:id', async (req, res) => {
+  const { id } = req.params
+  const palette = req.body
+  try {
+    for (let requiredParameter of ['palette_name', 'color_1',
+    'color_2', 'color_3', 'color_4', 'color_5']) {
+      console.log(requiredParameter)
+      if (!palette[requiredParameter]) {
+        return res
+          .status(422)
+          .send({ error: `Expected format: {palette_name: <String>, colors: <String> }. 
+          You're missing a "${requiredParameter}" property.` });
+      } else {
+        await database('palettes').where('id', id).update({...palette})
+        return res.status(202).json({id: id})
+      }
+    }
+  } catch(error){
+    res.status(500).json({ error });
+  }
+
+})
+
 
 
 
