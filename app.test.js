@@ -311,7 +311,7 @@ describe('API', () => {
       expect(parseInt(response.body.id)).toEqual(mockId);
       expect(response.status).toBe(202);
     });
-    it.skip('should respond with a status code of 422 if the required parameters are not given', async () => {
+    it('should respond with a status code of 422 if the required parameters are not given', async () => {
       const mockId = await database('palettes')
         .first('id')
         .then(obj => obj.id);
@@ -325,7 +325,7 @@ describe('API', () => {
         .send(palette);
       const expectedPalette = await database('palettes').where('id', mockId);
       expect(response.status).toBe(422);
-      expect(expectedPalette.color_4).not.toEqual(body.color_5);
+      expect(expectedPalette.color_4).not.toEqual(palette.color_4);
     });
   });
 });
