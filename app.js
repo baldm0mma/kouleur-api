@@ -4,11 +4,13 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 app.locals.title = 'Kouleur';
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/api/v1/projects', (req, res) => {
   database('projects')
