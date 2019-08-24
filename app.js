@@ -58,7 +58,8 @@ app.get('/api/v1/projects/:id/palettes', (req, res) => {
 app.get('/api/v1/palettes/search', (req, res) => {
   const query = req.query.hex;
   if (!query) {
-    return database('palettes').select()
+    return database('palettes')
+      .select()
       .then(palettes => res.status(200).json(palettes));
   }
   database('palettes')
@@ -86,10 +87,11 @@ app.post('/api/v1/projects', async (request, response) => {
       const id = await database('projects').insert(newProject, 'id');
       response.status(201).json(id[0]);
     } else {
-      response.status(422).json({
-        error:
+      response
+        .status(422)
+        .json(
           'Expected an object with a key of project in the body of the post request'
-      });
+        );
     }
   } catch (error) {
     response.status(500).json({ error });
