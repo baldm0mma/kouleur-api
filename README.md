@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a color palette picker RESTful API that utilizes semantic HTTP methods, intuitive url pathway naming conventions, and a one-to-many postgreSQL database of our own design. A user can GET the following: all projects, all palettes, a single projct, a single palette, and search a single palette by hexadecimal color query; they can POST the following: a single project and a single palette; and they can DELETE the following: a single project and a single palette; as well as they can PATCH a single palette.
+This project is a RESTful API color palette picker that utilizes semantic HTTP methods, intuitive url pathway naming conventions, and a one-to-many postgreSQL database of our own design. A user can GET the following: all projects, all palettes, a single projct, a single palette, and search a single palette by hexadecimal color query; they can POST the following: a single project and a single palette; and they can DELETE the following: a single project and a single palette; as well as they can PATCH a single palette.
 
 ## Project Successes
 
