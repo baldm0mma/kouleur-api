@@ -8,7 +8,7 @@ This project is a RESTful API color palette picker that utilizes semantic HTTP m
 
 THE FULL-STACK WORKFLOW: This is the API that is consumed by a front-end app also of our creation. It was a fantastic learning experience to design, create, and control everything from the PostgreSQL database to the design, function, and styling of the UI/UX.
 
-DATABASES - Learning first has how to design, execute, and populate a database was incrediblby informative. Seeing how the HTTP request/response cycle functions as the bridge between the FE and the BE was a very important learning experience, and will no doubt continue to inform how we develop both the FE and BE as full-stack software engineers.
+POSTGRESQL DATABASE - Learning first has how to design, execute, and populate a database was incrediblby informative. Seeing how the HTTP request/response cycle functions as the bridge between the FE and the BE was a very important learning experience, and will no doubt continue to inform how we develop both the FE and BE as full-stack software engineers.
 
 ## Project Challenges
 
