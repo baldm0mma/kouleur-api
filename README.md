@@ -43,12 +43,12 @@ We used GitHub issues to manage workflow.
 
 | url | verb | options | sample response |
 | ----|------|---------|---------------- |
-| `https://kouleur-api.herokuapp.com/api/v1/projects` | GET | Not Needed | An array of all projects: `[{ id: 1, project_name: 'Warm Kouleurs'}, { Next Project Object }]` |
-| `https://kouleur-api.herokuapp.com//api/v1/projects/:id` | GET | Not Needed | A single project: `{ id: 1, project_name: 'Warm Kouleurs' }` |
-| `https://kouleur-api.herokuapp.com/api/v1/projects/:id/palettes` | GET | Not Needed | All the palettes for a specific project: `[ { id: 1, project_id: 1, palette_name: "Summertime Breeze", color_1: "91a6ff", color_2: "ff88dc", color_3: "faff7f", color_4: "ffffff", color_5: "ff5154" }, { Next Palette Object} ]` |
+| `https://kouleur-api.herokuapp.com/api/v1/projects` | GET | Not Needed | An array of all projects: `[ { id: 1, project_name: 'Warm Kouleurs'}, { Next Project Object } ]` |
+| `https://kouleur-api.herokuapp.com//api/v1/projects/:id` | GET | An `id` param | A single project: `{ id: 1, project_name: 'Warm Kouleurs' }` |
+| `https://kouleur-api.herokuapp.com/api/v1/projects/:id/palettes` | GET | An `id` param | All the palettes for a specific project: `[ { id: 1, project_id: 1, palette_name: "Summertime Breeze", color_1: "91a6ff", color_2: "ff88dc", color_3: "faff7f", color_4: "ffffff", color_5: "ff5154" }, { Next Palette Object} ]` |
 | `https://kouleur-api.herokuapp.com/api/v1/palettes/search` | GET | `Query: "ff88dc"` | Search for and return a specific Palette that contains the hexadecimal query as a color value: `{ id: 1, project_id: 1, palette_name: "Summertime Breeze", color_1: "91a6ff", color_2: "ff88dc", color_3: "faff7f", color_4: "ffffff", color_5: "ff5154" }` |
 | `https://kouleur-api.herokuapp.com/api/v1/projects` | POST | { project: { project_name: `STRING` } } | Returns the id of the newly made Project: `{ id: 11 }` |
 | `https://kouleur-api.herokuapp.com/api/v1/palettes` | POST | { palette: { project_id: `NUMBER`, palette_name: `STRING`, color_1: `STRING`, color_2: `STRING`, color_3: `STRING`, color_4: `STRING`, color_5: `STRING` } } | The new palette's id: `{ id: 12 }` |
-| `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | DELETE | Not Needed | The deleted Palette's id: `{ id: 13 }` |
-| `https://kouleur-api.herokuapp.com/api/v1/projects/:id` | DELETE | Not Needed | The deleted Projects's id: `{ id: 14 }` |
-| `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | PATCH | `Param + { palette_name: "Summertime Breeze", color_1: "aaaaaa", color_2: "bbbbbb", color_3: "cccccc", color_4: "ffffff", color_5: "eeeeee" }` | The patched Palette's id: `{ id: 14 }` |
+| `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | DELETE | An `id` param | The deleted Palette's id: `{ id: 13 }` |
+| `https://kouleur-api.herokuapp.com/api/v1/projects/:id` | DELETE | An `id` param | The deleted Projects's id: `{ id: 14 }` |
+| `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | PATCH | An `id` param + `{ palette_name: "Summertime Breeze", color_1: "aaaaaa", color_2: "bbbbbb", color_3: "cccccc", color_4: "ffffff", color_5: "eeeeee" }` | The patched Palette's id: `{ id: 14 }` |
