@@ -6,7 +6,7 @@ This project is a color palette picker RESTful API that utilizes semantic HTTP m
 
 ## Project Successes
 
-THE FULL-STACK WORKFLOW: This is the API that is consumed by a front-end that we also created. It was a fantastic learning experience to design, create, and control everything from the PostgreSQL database to the design, function, and styling of the UI/UX.
+THE FULL-STACK WORKFLOW: This is the API that is consumed by a front-end app also of our creation. It was a fantastic learning experience to design, create, and control everything from the PostgreSQL database to the design, function, and styling of the UI/UX.
 
 DATABASES - Learning first has how to design, execute, and populate a database was incrediblby informative. Seeing how the HTTP request/response cycle functions as the bridge between the FE and the BE was a very important learning experience, and will no doubt continue to inform how we develop both the FE and BE as full-stack software engineers.
 
@@ -52,3 +52,5 @@ We used GitHub issues to manage workflow.
 | `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | DELETE | An `id` param | The deleted Palette's id: `{ id: 13 }` |
 | `https://kouleur-api.herokuapp.com/api/v1/projects/:id` | DELETE | An `id` param | The deleted Projects's id: `{ id: 14 }` |
 | `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | PATCH | An `id` param + `{ palette_name: "Summertime Breeze", color_1: "aaaaaa", color_2: "bbbbbb", color_3: "cccccc", color_4: "ffffff", color_5: "eeeeee" }` | The patched Palette's id: `{ id: 14 }` |
+
+Authors: ![Jev Forsberg](https://github.com/baldm0mma/); ![Evan Markowitz](https://github.com/evanmarkowitz)
