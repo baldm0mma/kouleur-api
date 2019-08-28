@@ -53,4 +53,4 @@ We used GitHub issues to manage workflow.
 | `https://kouleur-api.herokuapp.com/api/v1/projects/:id` | DELETE | An `id` param | The deleted Projects's id: `{ id: 14 }` |
 | `https://kouleur-api.herokuapp.com/api/v1/palettes/:id` | PATCH | An `id` param + `{ palette_name: "Summertime Breeze", color_1: "aaaaaa", color_2: "bbbbbb", color_3: "cccccc", color_4: "ffffff", color_5: "eeeeee" }` | The patched Palette's id: `{ id: 14 }` |
 
-Authors: ![Jev Forsberg](https://github.com/baldm0mma/); ![Evan Markowitz](https://github.com/evanmarkowitz)
+Authors: [Jev Forsberg](https://github.com/baldm0mma/); [Evan Markowitz](https://github.com/evanmarkowitz)
