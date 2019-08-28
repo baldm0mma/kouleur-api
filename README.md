@@ -37,7 +37,7 @@ We used GitHub issues to manage workflow.
 
 ## Schema
 
-<!--- insert schema ![Schema](path) --->
+![Schema](assets/DB-Schema.png)
 
 ## Development Endpoints
 
