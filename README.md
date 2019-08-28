@@ -4,7 +4,7 @@
 
 This project is a color palette picker RESTful API that utilizes semantic HTTP methods, intuitive url pathway naming conventions, and a one-to-many postgreSQL database of our own design. A user can GET the following: all projects, all palettes, a single projct, a single palette, and search a single palette by hexadecimal color query; they can POST the following: a single project and a single palette; and they can DELETE the following: a single project and a single palette; as well as they can PATCH a single palette.
 
-## Project Successes
+## Project Successes // stopped here...
 
 THE FULL-STACK WORKFLOW: This is the API that is consumed by a front-end that we also created. It was a fantastic learning experience to design, create, and control everything from the PostgreSQL database to the design, function, and styling of the UI/UX.
 
