@@ -32,6 +32,10 @@ KNEX - This was our second time creating a database from scratch; so the learnin
 * The use of Environmental Variables for Development/Test/CI/ and Production.
 * Git/GitHub Workflow, including rebasing.
 
+## Test Coverage
+
+![Test Coverage](./src/images/test-coverage.png)
+
 ## Project Management
 
 We used GitHub issues to manage workflow.
