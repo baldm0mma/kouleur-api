@@ -35,6 +35,12 @@ KNEX - This was our second time creating a database from scratch; so the learnin
 
 We used GitHub issues to manage workflow.
 
+## Test Coverage
+
+![Test Coverage](./assets/Kouleur-FE-Test-Coverage.png)
+
+The only lines untested were 500 status errors, which are difficult to simulate and often a sign of a larger database issue.
+
 ## Schema
 
 ![Schema](assets/DB-Schema.png)
