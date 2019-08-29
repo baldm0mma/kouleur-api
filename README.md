@@ -4,6 +4,8 @@
 
 This project is a RESTful API color palette picker that utilizes semantic HTTP methods, intuitive url pathway naming conventions, and a one-to-many postgreSQL database of our own design. A user can GET the following: all projects, all palettes, a single projct, a single palette, and search a single palette by hexadecimal color query; they can POST the following: a single project and a single palette; and they can DELETE the following: a single project and a single palette; as well as they can PATCH a single palette.
 
+This project also pairs with a React/Redux Front End App in which we used Semantic UI elements to style and design an elegant, thoughtful, and intuitive UI/UX experience. You can find our code for it [here](https://github.com/baldm0mma/kouleur-fe), and our deployed front end site [here](https://kouleur.herokuapp.com/) on Heroku.
+
 ## Project Successes
 
 THE FULL-STACK WORKFLOW: This is the API that is consumed by a front-end app also of our creation. It was a fantastic learning experience to design, create, and control everything from the PostgreSQL database to the design, function, and styling of the UI/UX.
