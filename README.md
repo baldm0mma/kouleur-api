@@ -17,6 +17,7 @@ KNEX - This was our second time creating a database from scratch; so the learnin
 ## Project Extensions/Issues
 
 * Refactor the endpoints to be pure SQL.
+* Redesign patch endpoint to use put method.
 
 ## Project Tech Emphasis
 
